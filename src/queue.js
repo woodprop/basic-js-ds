@@ -17,7 +17,20 @@ class Queue {
 
   queueArr = [];
   getUnderlyingList() {
-    return this.queueArr;
+    function ListNode(val, next) {
+      this.value = (val === undefined ? 0 : val);
+      this.next = (next === undefined ? null : next);
+    }
+
+    return this.queueArr.reverse().reduce((acc, curr) => {
+      if (acc == null) {
+        acc = new ListNode(curr);
+
+      } else {
+        acc = new ListNode(curr, acc);
+      }
+      return acc;
+    }, null);
   }
 
   enqueue(value) {
