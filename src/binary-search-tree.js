@@ -29,7 +29,6 @@ class BinarySearchTree {
   }
 
   add(data) {
-
       if (this.minVal === null || data < this.minVal) this.minVal = data;
       if (this.maxVal === null || data > this.maxVal) this.maxVal = data;
 
@@ -79,11 +78,35 @@ class BinarySearchTree {
 
   }
 
+
   remove(data) {
-      // ***************** НЕ РАБОТАЕТ ********************
-    let nodeToRemove = this.find(data);
-    nodeToRemove.delete;
+    this.mainNode = this.removeInner(data, this.mainNode);
   }
+
+  removeInner(value, node) {
+    if (value < node.data) {
+      node.left = this.removeInner(value, node.left);
+    } else if (value > node.data) {
+      node.right = this.removeInner(value, node.right);
+    } else if (node.left && node.right) {
+      node.data = this.findMinValue(node.right);
+      node.right = this.removeInner(node.data, node.right);
+    } else {
+      node = node.left || node.right;
+    }
+    return node;
+  }
+
+  findMinValue(node) {
+    if (this.root !== null) {
+      if (!node) node = this.mainNode;
+      while (node.left) {
+        node = node.left;
+      }
+      return node.data;
+    }
+  }
+
 
   min() {
     return this.minVal;
